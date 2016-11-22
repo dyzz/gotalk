@@ -1,0 +1,243 @@
+Go语言介绍
+Nov 22, 2016
+
+庄重
+zhong.zhuang@bitmain.com
+
+* 大纲
+
+历史与现状
+
+选择Go语言
+  - 软件工程
+  - 并发
+
+* Go的作者们
+
+Ken Thompson: B语言，C语言作者。Unix和Plan 9操作系统。1983年图灵奖
+
+Robert Griesemer:  Chrome V8引擎
+
+Rob Pike: Unix，Plan 9小组成员
+
+Russ Cox: 参与Plan 9
+
+* 历史
+
+2007年末开始设计
+
+2009年开源
+
+2012年Go 1.0
+
+2016年Go 1.7
+
+* 现状
+.image ./ranking.jpeg
+
+* 为什么会有Go语言
+
+可扩展性
+
+可协作性
+
+- 数千名程序员
+- 偏后端开发
+- 较多人有C背景
+
+* 谁在使用
+
+Google
+
+- 大量的内部项目（包括Go！）
+
+[[https://github.com/golang/go/wiki/GoUsers]]
+
+* 性能
+
+.image ./funfast.svg
+
+* 适合人群
+
+Java背景
+
+C语言爱好者
+
+后端开发
+
+IDE恐惧症患者
+
+* Go vs Java - 1
+
+都有点像C
+
+静态类型
+
+GC
+
+内存安全
+
+Interface
+
+Reflection
+
+* Go vs Java - 2
+
+Go可以编译成本地代码
+
+Go的语法更简单
+
+内建的简单数据结构(map,array,slice)
+
+相对简单的并发模型
+
+* Go vs Java - 3
+
+没有类
+
+没有继承
+
+没有final
+
+没有exception
+
+没有annotation
+
+没有泛型
+
+* Hello world
+
+.play ./hello.go
+
+* Hello server
+
+.play ./server.go
+
+* CSP
+
+Communicting Sequential Process(Hoare, 1978)
+
+一组独立的进程，通过消息传递通信
+
+goroutines, channels, select
+
+* Goroutines
+
+轻量的线程(erlang)
+
+可以同时有数千个goroutine
+
+Go的Runtime负责调度
+
+运行一个goroutine
+
+  go f(args)
+
+* Channel
+
+多个goroutine之间通信
+
+  c := make(chan string)
+
+  // goroutine 1
+  c <- "hello!"
+
+  // goroutine 2
+  s := <-c
+  fmt.Println(s) // "hello!"
+
+* Select
+
+阻塞goroutine，直到channel有消息可以处理
+
+  select {
+  case x := <-in:
+    fmt.Println("received", x)
+  case out <- v:
+    fmt.Println("sent", v)
+  }
+
+* 工具链
+
+gofmt
+
+godef
+
+godoc
+
+golint/govet
+
+test
+
+present
+
+* gofmt
+
+统一代码风格
+
+  // 错误
+  func main()
+  {
+    fmt.Println("Hello, 世界!")
+  }
+
+  // gofmt
+  func main() {
+    fmt.Println("Hello, 世界!")
+  }
+
+适应后对于团队协作很有帮助
+
+* godef
+
+godef配合插件可以很好的适配各种文本编辑器，接近IDE的跳转体验
+
+- Emacs: go-mode
+
+- Vim:
+
+- Sublime:
+
+* godoc
+
+官方fmt包里的例子
+
+  // Fprint formats using the default formats for its operands and writes to w.
+  // Spaces are added between operands when neither is a string.
+  // It returns the number of bytes written and any write error encountered.
+  func Fprint(w io.Writer, a ...interface{}) (n int, err error) {
+
+运行
+
+  godoc fmt
+
+* test
+
+[[https://golang.org/pkg/testing/]]
+[[https://blog.golang.org/cover]]
+[[https://blog.golang.org/profiling-go-programs]]
+
+* 其他
+
+golint/govet: 检查代码风格
+
+present: 做PPT...
+
+* 开发建议
+
+配置好gofmt, 保存时自动执行
+
+commit前用golint/govet检查
+
+每个函数都写好godoc
+
+每个module.go要有对应module_test.go
+
+
+
+
+
+
+
+
+
